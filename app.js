@@ -5,10 +5,20 @@ import dotenv from 'dotenv'
 
 //
 import  getwayRoutes  from "./src/routes/getwaysRoutes.js"
+import  devicesRoutes  from "./src/routes/devicesRoutes.js"
 
 dotenv.config()
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use('/getways', getwayRoutes);
+app.use('/devices', devicesRoutes);
+
+const port = 3001;
+
 
 // Set up mongoose connection
 
@@ -20,12 +30,6 @@ mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
-app.use('/getways', getwayRoutes);
-
-const port = 3001;
 
 db.once('open', function() {
     console.log('Connected!');

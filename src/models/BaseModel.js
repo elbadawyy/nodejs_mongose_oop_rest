@@ -14,13 +14,13 @@ export default class BaseModel{
     }
 
     async create(item){
-        try {
+        // try {
             return await this.mongooseModel.create(item);
 
-        }catch(e){
-            console.log("errr ",e.message)
-            return {result:false,errorMsg:e.message}
-        }
+        // }catch(e){
+        //     console.log("errr ",e.message)
+        //     return {result:false,errorMsg:e.message}
+        // }
     }
 
     // async all(cond={}, fields={},options={}, sortOptions={}) {
@@ -33,18 +33,18 @@ export default class BaseModel{
 
     // }
 
-    // async findOne(cond: Query<T, T>, fields: OnlyFieldsOfType<T>, options: QueryOptions): Promise<T> {
-    //     return <Promise<T>>this.model.findOne(cond, fields, options).exec();
-    // }
+    async findOne(cond={}, fields={},options={}, sortOptions={}) {
+        return this.mongooseModel.findOne(cond, fields, options).exec();
+    }
 
     // async create(item: T): Promise<T> {
     //     return <Promise<T>>this.model.create(item);
     // }
 
-    // async update(id: ObjectId, newitem: T): Promise<T> {
-    //     // return this.model.create(item);
-    //     return <Promise<T>>this.model.findByIdAndUpdate(id, newitem, { new: true }).exec();
-    // }
+    async update(id, newitem) {
+        // return this.model.create(item);
+        return this.mongooseModel.findByIdAndUpdate(id, newitem, { new: true }).exec();
+    }
 
     // async upsert(id: ObjectId, item: T): Promise<T> {
 

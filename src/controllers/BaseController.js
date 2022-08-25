@@ -1,24 +1,24 @@
 export default class BaseController{
-    Model
+    
     constructor(Model){
-        console.log("crrrrrr",Model)
-        this.Model=Model
+        this.model=Model
     }
 
  
 
-    async index() {
-        this.Model.all()
+    async index(req,res) {
+        res.send(await this.model.all())
        
     }
 
-    async create(item){
+    async create(req,res){
         try {
-            return await this.mongooseModel.create(item);
+            console.log("llllll",this)
+            res.send(await this.model.create(req.body))
 
         }catch(e){
-            console.log("errr ",e.message)
-            return {result:false,errorMsg:e.message}
+            console.log("xxx ",e.message)
+            res.send({result:false,errorMsg:e.message})
         }
     }
 

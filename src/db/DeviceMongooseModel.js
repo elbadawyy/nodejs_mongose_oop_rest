@@ -2,15 +2,17 @@ import  mongoose  from 'mongoose';
 var Schema = mongoose.Schema;
 
 var DeviceSchema = new Schema({
-    vendor: {type: String, required: true, max: 100},
-    status: {
+  getwayId: {type: mongoose.Schema.Types.ObjectId, ref: 'Getway'},
+
+  vendor: {type: String, required: true, max: 100},
+  uid: {type: String, required: true, max: 100},
+  status: {
         type: String,
         enum: {
           values: ['online', 'offline'],
           message: '{VALUE} is not supported'
         }
       },
-    ip: {type: String, required: true,validate: /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/ },
 },{ timestamps: true });
 
 

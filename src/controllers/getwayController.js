@@ -5,15 +5,15 @@ class GetwayController extends BaseController {
     constructor(Model) {
         super(Model);
     }
-  async createGetway(item){
-    // try {
-        return await Getway.create(item);
+  async createGetway(req,res){
+    try {
+        res.send(await Getway.create(req.body));
 
-    // }catch(e){
-    //     console.log("errr ",e.message)
-    //     return {result:false,errorMsg:e.message}
-    // }
+    }catch(e){
+        res.send( {result:false,errorMsg:e.message})
+    }
   }  
 }
+let getwayController = new GetwayController(Getway);
 
-export default new GetwayController(Getway);
+export default getwayController

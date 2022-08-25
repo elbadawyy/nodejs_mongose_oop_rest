@@ -1,12 +1,7 @@
+import yup from "yup"
 
-const getway = yup.object({
-    body: yup.object({
-      url: yup.string().url().required(),
-      title: yup.string().min(8).max(32).required(),
-      content: yup.string().min(8).max(255).required(),
-      contact: yup.string().email().required(),
-    }),
-    params: yup.object({
-      id: yup.number().required(),
-    }),
+export const getwayRequestSchema = yup.object({
+  ip: yup.string().required().matches(/^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/),
+  name: yup.string().required(),
+   
   });
