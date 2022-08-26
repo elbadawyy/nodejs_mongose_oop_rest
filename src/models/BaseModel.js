@@ -4,15 +4,6 @@ export default class BaseModel{
         this.mongooseModel=MongooseModel
     }
 
- 
-
-    async all(cond={}, fields={},options={}, sortOptions={}) {
-
-        console.log( "yeeeees")
-        // return []
-        return this.mongooseModel.find({}).exec();
-    }
-
     async create(item){
         // try {
             return await this.mongooseModel.create(item);
@@ -23,37 +14,40 @@ export default class BaseModel{
         // }
     }
 
-    // async all(cond={}, fields={},options={}, sortOptions={}) {
+    async all() {
 
-    //     console.log( "yeeeees")
-    //     // return []
-    //     let query = this.model.find(cond, fields, options);
-    //     if (sortOptions) query = query.sort(sortOptions);
-    //     return query.exec();
+      
+        let query =await this.model.find({});
+        if (sortOptions) query = query.sort(sortOptions);
+        return await query.exec();
 
-    // }
-
-    async findOne(cond={}, fields={},options={}, sortOptions={}) {
-        return this.mongooseModel.findOne(cond, fields, options).exec();
     }
 
-    // async create(item: T): Promise<T> {
-    //     return <Promise<T>>this.model.create(item);
-    // }
+    async findOne(cond={}, includeFrom=[]) {
+        if(includeFrom?.length>0){
+            return this.mongooseModel.findOne(cond).populate(includeFrom).exec();
+
+        }else{
+            return this.mongooseModel.findOne(cond).exec();
+        }
+    }
+
+
 
     async update(id, newitem) {
         // return this.model.create(item);
         return this.mongooseModel.findByIdAndUpdate(id, newitem, { new: true }).exec();
     }
 
-    // async upsert(id: ObjectId, item: T): Promise<T> {
+    // async show(id,includeFrom=[]) {
+    //     if(includeFrom?.length>0){
 
-    //     // return this.model.create(item);
-    //     return <Promise<T>>this.model.findByIdAndUpdate(id, item, { new: true, upsert: true }).exec();
-    // }
+    //     }else{
+    //         return await this.mongooseModel.find(id).exec();
 
-    // listAll(): Promise<T> {
-    //     return this.model.create(item);
+    //     }
+    //     console.log( "yeeeees")
+    //     // return []
     // }
 
 }

@@ -14,7 +14,6 @@ class DeviceController extends BaseController {
    
 
     async createInGetway(req,res){
-      console.log("rrrr",req.params)
       let getway=Getway.findOne({_id:req.params.getwayId})
       if (getway){
         const device=await Device.create({...req.body,getwayId:req.params.getwayId})
@@ -28,6 +27,7 @@ class DeviceController extends BaseController {
 
     async  linkDeviceToGetway(device_id,getway){
       let newgetway
+      // check if getway already has devices or this is the first one
       if (getway.devices && getway.devices?.length > 0){
         const devices= getway.devices
         devices=devices.filter(function(dev_id){ return dev_id ==  device_id}).length() > 0 ? devices.push(device_id) : devices

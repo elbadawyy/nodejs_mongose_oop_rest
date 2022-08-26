@@ -18,13 +18,13 @@ export default class BaseMongoose  {
 
     }
 
-    // async findOne(cond: Query<T, T>, fields: OnlyFieldsOfType<T>, options: QueryOptions): Promise<T> {
-    //     return <Promise<T>>this.model.findOne(cond, fields, options).exec();
-    // }
+    async findOne(cond, fields, options) {
+        return await this.model.findOne(cond, fields, options).exec();
+    }
 
-    // async create(item: T): Promise<T> {
-    //     return <Promise<T>>this.model.create(item);
-    // }
+    async create(item) {
+        return await this.model.create(item);
+    }
 
     // async update(id: ObjectId, newitem: T): Promise<T> {
     //     // return this.model.create(item);

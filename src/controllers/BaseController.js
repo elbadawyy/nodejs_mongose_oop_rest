@@ -1,58 +1,55 @@
-export default class BaseController{
-    
-    constructor(Model){
-        this.model=Model
+export default class BaseController {
+
+    constructor(Model) {
+        this.model = Model
     }
 
- 
 
-    async index(req,res) {
+
+    async index(req, res) {
         res.send(await this.model.all())
-       
+
     }
 
-    async create(req,res){
+    async create(req, res) {
         try {
-            console.log("llllll",this)
             res.send(await this.model.create(req.body))
 
-        }catch(e){
-            console.log("xxx ",e.message)
-            res.send({result:false,errorMsg:e.message})
+        } catch (e) {
+            res.send({ result: false, errorMsg: e.message })
         }
     }
 
-    // async all(cond={}, fields={},options={}, sortOptions={}) {
+    async update(req, res) {
+        try {
+            res.send(await this.model.update(req.params.id,req.body))
 
-    //     console.log( "yeeeees")
-    //     // return []
-    //     let query = this.model.find(cond, fields, options);
-    //     if (sortOptions) query = query.sort(sortOptions);
-    //     return query.exec();
+        } catch (e) {
+            res.send({ result: false, errorMsg: e.message })
+        }
+    }
 
-    // }
+    async destroy(req, res) {
+        try {
+            await this.model.deleteOne({ _id: req.params.id });
+            res.status(201)
 
-    // async findOne(cond: Query<T, T>, fields: OnlyFieldsOfType<T>, options: QueryOptions): Promise<T> {
-    //     return <Promise<T>>this.model.findOne(cond, fields, options).exec();
-    // }
+        } catch (e) {
+            res.send({ result: false, errorMsg: e.message })
+        }
+    }
 
-    // async create(item: T): Promise<T> {
-    //     return <Promise<T>>this.model.create(item);
-    // }
+    async show(req, res) {
+        try {
+            let result = await this.model.findOne({ _id: req.params.id });
+            if (result)
+                res.send(result)
+            else
+                res.status(404).json({ result: false, errorMsg: "id(" + req.params.id + ") not found" })
 
-    // async update(id: ObjectId, newitem: T): Promise<T> {
-    //     // return this.model.create(item);
-    //     return <Promise<T>>this.model.findByIdAndUpdate(id, newitem, { new: true }).exec();
-    // }
-
-    // async upsert(id: ObjectId, item: T): Promise<T> {
-
-    //     // return this.model.create(item);
-    //     return <Promise<T>>this.model.findByIdAndUpdate(id, item, { new: true, upsert: true }).exec();
-    // }
-
-    // listAll(): Promise<T> {
-    //     return this.model.create(item);
-    // }
+        } catch (e) {
+            res.send({ result: false, errorMsg: e.message })
+        }
+    }
 
 }
